@@ -63,7 +63,7 @@ export function ImamDetailView({ imam, mosque }: ImamDetailViewProps) {
           <div className="flex flex-col lg:flex-row gap-8 items-start">
             {/* Premium Profile Image */}
             <div className="flex-shrink-0">
-              <Avatar className="h-48 w-48 rounded-2xl border-4 border-background shadow-elevation-lg">
+              <Avatar className="h-48 w-48 rounded-2xl border-4 border-background shadow-lg">
                 <AvatarImage src={imam.photoUrl} alt={imam.name} className="object-cover" />
                 <AvatarFallback className="rounded-2xl text-4xl font-bold bg-gradient-to-br from-primary/10 to-primary/5 text-primary flex items-center justify-center">
                   {imam.name.split(' ').map(n => n[0]).join('')}

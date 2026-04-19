@@ -188,11 +188,11 @@
 
   /* Premium card styling */
   .card-premium {
-    @apply bg-card/95 backdrop-blur-sm border border-border/40 rounded-xl shadow-elevation-sm transition-all duration-300;
+    @apply bg-card/95 backdrop-blur-sm border border-border/40 rounded-xl shadow-sm transition-all duration-300;
   }
 
   .card-premium-hover {
-    @apply card-premium hover:shadow-elevation-md hover:border-border/60 hover:bg-card;
+    @apply bg-card/95 backdrop-blur-sm border border-border/40 rounded-xl shadow-sm transition-all duration-300 hover:shadow-md hover:border-border/60 hover:bg-card;
   }
 
   /* Smooth transitions for interactive elements */
@@ -206,21 +206,21 @@
 
   /* Focus ring refinement */
   .focus-ring-premium {
-    @apply outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-premium;
+    @apply outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-300 ease-out;
   }
 
   /* Hover lift effect */
   .hover-lift {
-    @apply transition-premium hover:shadow-elevation-lg hover:-translate-y-1;
+    @apply transition-all duration-300 ease-out hover:shadow-lg hover:-translate-y-1;
   }
 
   /* Premium badge styling */
   .badge-premium {
-    @apply inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/10 text-accent border border-accent/20 text-sm font-medium transition-premium;
+    @apply inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/10 text-accent border border-accent/20 text-sm font-medium transition-all duration-300 ease-out;
   }
 
   .badge-primary {
-    @apply inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 text-sm font-medium transition-premium;
+    @apply inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 text-sm font-medium transition-all duration-300 ease-out;
   }
 
   /* Premium accent light backgrounds */
@@ -235,12 +235,27 @@
 
   /* Link styling with hover animation */
   .link-premium {
-    @apply text-primary font-medium relative cursor-pointer group transition-premium;
+    color: rgb(var(--color-primary));
+    font-weight: 500;
+    position: relative;
+    cursor: pointer;
+    transition: all 300ms ease-out;
   }
 
   .link-premium::after {
     content: '';
-    @apply absolute inset-x-0 bottom-0 h-0.5 bg-primary/50 scale-x-0 transition-transform duration-300 group-hover:scale-x-100 origin-left;
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 0.125rem;
+    background-color: rgb(var(--color-primary) / 0.5);
+    scale: scaleX(0);
+    transition: scale 0.3s;
+    transform-origin: left;
+  }
+
+  .link-premium:hover::after {
+    scale: scaleX(1);
   }
 
   /* Refined button text */
@@ -250,7 +265,7 @@
 
   /* Premium facility tags */
   .facility-tag-premium {
-    @apply inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/5 text-foreground border border-primary/15 text-xs font-medium transition-premium hover:bg-primary/8 hover:border-primary/25;
+    @apply inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/5 text-foreground border border-primary/15 text-xs font-medium transition-all duration-300 ease-out hover:bg-primary/8 hover:border-primary/25;
   }
 
   /* Light green accent backgrounds with gradient */
@@ -264,15 +279,15 @@
   }
 
   .heading-xl {
-    @apply heading-premium text-3xl md:text-4xl;
+    @apply font-semibold tracking-tight leading-tight text-3xl md:text-4xl;
   }
 
   .heading-lg {
-    @apply heading-premium text-2xl md:text-3xl;
+    @apply font-semibold tracking-tight leading-tight text-2xl md:text-3xl;
   }
 
   .heading-md {
-    @apply heading-premium text-xl md:text-2xl;
+    @apply font-semibold tracking-tight leading-tight text-xl md:text-2xl;
   }
 
   /* Body text refinements */

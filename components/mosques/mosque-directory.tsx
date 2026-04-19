@@ -588,7 +588,7 @@ function MosqueCard({ mosque }: { mosque: Mosque }) {
           
           {mosque.is_verified && (
             <div className="absolute right-4 top-4">
-              <Badge variant="success" className="gap-1.5 font-semibold shadow-elevation-sm">
+              <Badge variant="success" className="gap-1.5 font-semibold shadow-sm">
                 <CheckCircle className="h-4 w-4" />
                 Verified
               </Badge>

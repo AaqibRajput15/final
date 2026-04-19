@@ -135,7 +135,7 @@ export function MosqueDetail({ data }: MosqueDetailProps) {
             {/* Left Side - Info */}
             <div className="flex flex-col gap-6 sm:flex-row sm:items-start flex-1">
               {/* Premium Icon */}
-              <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/15 to-primary/5 border border-primary/20 flex-shrink-0 shadow-elevation-md">
+              <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/15 to-primary/5 border border-primary/20 flex-shrink-0 shadow-md">
                 <MosqueIcon className="h-12 w-12 text-primary" />
               </div>
 
@@ -782,7 +782,7 @@ function PrayerTimeCard({
   className?: string;
 }) {
   return (
-    <div className={cn("rounded-xl border border-border/40 bg-gradient-to-br from-muted/30 to-muted/10 p-5 shadow-elevation-sm hover:shadow-elevation-md transition-all hover:border-border/60 group cursor-default", className)}>
+    <div className={cn("rounded-xl border border-border/40 bg-gradient-to-br from-muted/30 to-muted/10 p-5 shadow-sm hover:shadow-md transition-all hover:border-border/60 group cursor-default", className)}>
       <div className="flex items-center justify-between gap-4">
         <p className="font-semibold text-foreground text-sm uppercase tracking-wider text-muted-foreground">{label}</p>
         <div className="text-right">

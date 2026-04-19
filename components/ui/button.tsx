@@ -5,7 +5,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive shadow-elevation-sm hover:shadow-elevation-md active:shadow-elevation-xs",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive shadow-sm hover:shadow-md active:shadow-xs",
   {
     variants: {
       variant: {
@@ -13,9 +13,9 @@ const buttonVariants = cva(
         destructive:
           'bg-destructive text-white hover:bg-destructive/90 active:bg-destructive/95 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/70',
         outline:
-          'border border-border/60 bg-background hover:bg-accent/50 hover:border-accent/60 active:bg-accent text-foreground shadow-elevation-xs',
+          'border border-border/60 bg-background hover:bg-accent/50 hover:border-accent/60 active:bg-accent text-foreground shadow-xs',
         secondary:
-          'bg-secondary text-secondary-foreground hover:bg-secondary/85 active:bg-secondary/95 shadow-elevation-sm',
+          'bg-secondary text-secondary-foreground hover:bg-secondary/85 active:bg-secondary/95 shadow-sm',
         ghost:
           'hover:bg-accent/40 hover:text-accent-foreground active:bg-accent/60 text-foreground',
         link: 'text-primary font-semibold underline-offset-4 hover:underline',
