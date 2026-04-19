@@ -43,106 +43,90 @@ export function ImamDetailView({ imam, mosque }: ImamDetailViewProps) {
 
   return (
     <div>
-      {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-primary/10 via-primary/5 to-background">
-        <div className="absolute inset-0 opacity-5">
-          <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="imam-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-                <circle cx="20" cy="20" r="1" fill="currentColor" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#imam-pattern)" />
-          </svg>
+      {/* Hero Section - Premium */}
+      <div className="relative bg-gradient-to-br from-primary/5 via-background to-accent/4 border-b border-border/40 overflow-hidden">
+        {/* Decorative background */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-20 right-0 w-80 h-80 bg-primary/4 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-accent/4 rounded-full blur-3xl" />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-8 lg:px-8">
           <Link 
             href={`/mosques/${mosque.id}`}
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
+            className="group inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors mb-8"
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
             Back to {mosque.name}
           </Link>
 
           <div className="flex flex-col lg:flex-row gap-8 items-start">
-            {/* Profile Image */}
+            {/* Premium Profile Image */}
             <div className="flex-shrink-0">
-              <Avatar className="h-48 w-48 rounded-2xl border-4 border-background shadow-xl">
+              <Avatar className="h-48 w-48 rounded-2xl border-4 border-background shadow-lg">
                 <AvatarImage src={imam.photoUrl} alt={imam.name} className="object-cover" />
-                <AvatarFallback className="rounded-2xl text-4xl bg-primary/10 text-primary">
+                <AvatarFallback className="rounded-2xl text-4xl font-bold bg-gradient-to-br from-primary/10 to-primary/5 text-primary flex items-center justify-center">
                   {imam.name.split(' ').map(n => n[0]).join('')}
                 </AvatarFallback>
               </Avatar>
             </div>
 
-            {/* Basic Info */}
-            <div className="flex-1">
-              <div className="flex flex-wrap items-center gap-3 mb-2">
-                <Badge className="bg-primary/10 text-primary">{imam.title}</Badge>
+            {/* Premium Basic Info */}
+            <div className="flex-1 space-y-6">
+              <div className="flex flex-wrap items-center gap-3">
+                <Badge variant="default" className="text-sm font-semibold px-4 py-2">{imam.title}</Badge>
                 {imam.isActive && (
-                  <Badge variant="outline" className="border-green-500 text-green-600">Active</Badge>
+                  <Badge variant="success" className="text-sm font-semibold px-4 py-2">
+                    <span className="h-2.5 w-2.5 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
+                    Currently Active
+                  </Badge>
                 )}
               </div>
               
-              <h1 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">{imam.name}</h1>
-              
-              <div className="flex flex-wrap gap-4 text-muted-foreground mb-6">
-                <div className="flex items-center gap-2">
-                  <Building2 className="h-4 w-4" />
-                  <span>{mosque.name}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
-                  <span>Serving since {new Date(imam.appointmentDate).getFullYear()} ({yearsAtMosque}+ years)</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Star className="h-4 w-4" />
-                  <span>{imam.yearsOfExperience}+ years total experience</span>
-                </div>
+              <div>
+                <h1 className="text-3xl lg:text-4xl font-bold leading-tight text-foreground mb-2">{imam.name}</h1>
+                <p className="text-base text-muted-foreground font-medium">{imam.title} at {mosque.name}</p>
               </div>
-
-              {/* Quick Stats */}
-              <div className="flex flex-wrap gap-3">
-                {imam.education.length > 0 && (
-                  <Badge variant="secondary" className="gap-1.5 py-1.5">
-                    <GraduationCap className="h-3.5 w-3.5" />
-                    {imam.education.length} Degree{imam.education.length > 1 ? 's' : ''}
-                  </Badge>
-                )}
-                <Badge variant="secondary" className="gap-1.5 py-1.5">
-                  <Languages className="h-3.5 w-3.5" />
-                  {imam.languages.length} Language{imam.languages.length > 1 ? 's' : ''}
-                </Badge>
-                {imam.certifications && imam.certifications.length > 0 && (
-                  <Badge variant="secondary" className="gap-1.5 py-1.5">
-                    <Award className="h-3.5 w-3.5" />
-                    {imam.certifications.length} Certification{imam.certifications.length > 1 ? 's' : ''}
-                  </Badge>
-                )}
-                {imam.publications && imam.publications.length > 0 && (
-                  <Badge variant="secondary" className="gap-1.5 py-1.5">
-                    <FileText className="h-3.5 w-3.5" />
-                    {imam.publications.length} Publication{imam.publications.length > 1 ? 's' : ''}
-                  </Badge>
-                )}
+              
+              <div className="grid gap-3 sm:grid-cols-3 py-4 px-4 rounded-xl bg-muted/30 border border-border/40">
+                <div className="flex items-start gap-3">
+                  <Building2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Serving At</p>
+                    <p className="text-sm font-semibold text-foreground mt-1">{mosque.name}</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Calendar className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Experience</p>
+                    <p className="text-sm font-semibold text-foreground mt-1">{yearsAtMosque}+ years here</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Star className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Total</p>
+                    <p className="text-sm font-semibold text-foreground mt-1">{imam.yearsOfExperience}+ years</p>
+                  </div>
+                </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap gap-3 mt-6">
+              <div className="flex flex-wrap gap-3 pt-2">
                 {imam.contactEmail && (
-                  <Button asChild>
+                  <Button asChild size="lg" className="gap-2">
                     <a href={`mailto:${imam.contactEmail}`}>
-                      <Mail className="h-4 w-4 mr-2" />
+                      <Mail className="h-5 w-5" />
                       Contact Imam
                     </a>
                   </Button>
                 )}
                 {imam.contactPhone && (
-                  <Button variant="outline" asChild>
+                  <Button variant="outline" size="lg" asChild className="gap-2">
                     <a href={`tel:${imam.contactPhone}`}>
-                      <Phone className="h-4 w-4 mr-2" />
-                      Call
+                      <Phone className="h-5 w-5" />
+                      Call Now
                     </a>
                   </Button>
                 )}
