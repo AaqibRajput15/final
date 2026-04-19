@@ -574,61 +574,72 @@ export function MosqueDirectory({
 function MosqueCard({ mosque }: { mosque: Mosque }) {
   return (
     <Link href={`/mosques/${mosque.id}`}>
-      <Card className="group h-full overflow-hidden rounded-lg border-border/50 transition-all duration-300 hover:shadow-md hover:border-primary/30">
-        {/* Icon Area - Minimal */}
-        <div className="relative h-32 bg-accent-light flex items-center justify-center">
-          <MosqueIcon className="h-16 w-16 text-primary/30" />
+      <Card className="group h-full overflow-hidden hover-lift">
+        {/* Premium Icon Area */}
+        <div className="relative h-40 bg-gradient-to-br from-primary/8 to-accent/4 border-b border-border/30 flex items-center justify-center overflow-hidden group-hover:from-primary/10 transition-colors">
+          {/* Decorative background elements */}
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/20 rounded-full blur-2xl" />
+          </div>
+          
+          <div className="relative">
+            <MosqueIcon className="h-20 w-20 text-primary/40 group-hover:text-primary/60 transition-colors" />
+          </div>
+          
           {mosque.is_verified && (
-            <div className="absolute right-3 top-3">
-              <Badge className="flex items-center gap-1 rounded-full bg-primary/10 text-primary text-xs gap-1 py-0.5 px-2">
-                <CheckCircle className="h-3 w-3" />
+            <div className="absolute right-4 top-4">
+              <Badge variant="success" className="gap-1.5 font-semibold shadow-elevation-sm">
+                <CheckCircle className="h-4 w-4" />
                 Verified
               </Badge>
             </div>
           )}
         </div>
 
-        <CardContent className="p-5">
+        <CardContent className="p-6 space-y-4">
           {/* Mosque Name */}
-          <h3 className="line-clamp-1 text-lg font-semibold text-foreground">
+          <h3 className="line-clamp-2 text-lg font-bold text-foreground group-hover:text-primary transition-colors">
             {mosque.name}
           </h3>
 
           {/* Location */}
-          <div className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
-            <MapPin className="h-4 w-4 flex-shrink-0" />
-            <span className="line-clamp-1 text-sm">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
+            <MapPin className="h-4 w-4 flex-shrink-0 text-primary" />
+            <span className="line-clamp-1">
               {mosque.city}, {mosque.state}
             </span>
           </div>
 
           {/* Description */}
-          <p className="mt-3 line-clamp-2 text-sm text-muted-foreground leading-relaxed">
+          <p className="line-clamp-2 text-sm text-foreground/70 leading-relaxed">
             {mosque.description || "Community mosque serving the area."}
           </p>
 
           {/* Facilities */}
-          <div className="mt-4 flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-2 pt-2">
             {(mosque.facilities ?? []).slice(0, 3).map((facility) => (
               <Badge
                 key={facility}
                 variant="outline"
-                className="facility-tag text-xs"
+                className="facility-tag-premium text-xs"
               >
                 {facility}
               </Badge>
             ))}
             {(mosque.facilities ?? []).length > 3 && (
-              <Badge variant="outline" className="facility-tag text-xs">
-                +{(mosque.facilities ?? []).length - 3}
+              <Badge variant="outline" className="facility-tag-premium text-xs font-semibold">
+                +{(mosque.facilities ?? []).length - 3} more
               </Badge>
             )}
           </div>
 
-          {/* Footer */}
-          <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground border-t border-border/30 pt-3">
+          {/* Footer Stats */}
+          <div className="flex items-center justify-between pt-4 border-t border-border/30 text-xs font-semibold text-muted-foreground">
             <span>Est. {mosque.established_year || "N/A"}</span>
-            <span>{(mosque.capacity ?? 0).toLocaleString()} Capacity</span>
+            <span className="flex items-center gap-1.5">
+              <Users className="h-3.5 w-3.5" />
+              {(mosque.capacity ?? 0).toLocaleString()}
+            </span>
           </div>
         </CardContent>
       </Card>

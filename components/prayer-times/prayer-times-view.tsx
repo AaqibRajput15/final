@@ -207,86 +207,97 @@ export function PrayerTimesView() {
   const nextPrayer = getNextPrayer()
 
   return (
-    <div className="space-y-6">
-      {/* Prayer Times - Main Card (Minimal Design) */}
-      <Card className="card-minimal border-border/50">
-        <CardHeader className="pb-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Clock className="h-5 w-5 text-primary" />
-              <CardTitle className="text-lg font-semibold">Today&apos;s Prayer Times</CardTitle>
+    <div className="space-y-8">
+      {/* Prayer Times - Premium Card */}
+      <Card className="overflow-hidden">
+        <div className="relative bg-gradient-to-br from-primary/5 to-accent/3 border-b border-border/40 p-7">
+          <div className="flex items-center gap-3">
+            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 border border-primary/20">
+              <Clock className="h-6 w-6 text-primary" />
+            </div>
+            <div>
+              <CardTitle className="text-2xl font-bold">Today&apos;s Prayer Times</CardTitle>
+              <p className="text-sm text-muted-foreground mt-1 font-medium">{hijriDate}</p>
             </div>
           </div>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          {prayerTimes.filter(p => p.name !== 'Sunrise').map((prayer) => (
-            <div key={prayer.name} className="flex justify-between items-center py-2 border-b border-border/30 last:border-0">
-              <div>
-                <p className="font-medium text-foreground">{prayer.name}</p>
-                <p className="text-xs text-muted-foreground font-amiri">{prayer.arabicName}</p>
+        </div>
+        
+        <CardContent className="p-7 space-y-4">
+          {prayerTimes.filter(p => p.name !== 'Sunrise').map((prayer, index) => (
+            <div key={prayer.name} className={cn(
+              "flex items-center justify-between py-4 transition-colors",
+              index < prayerTimes.filter(p => p.name !== 'Sunrise').length - 1 ? "border-b border-border/30" : ""
+            )}>
+              <div className="flex items-center gap-4 flex-1">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/5 flex-shrink-0">
+                  <span className="text-xs font-bold text-primary">{index + 1}</span>
+                </div>
+                <div>
+                  <p className="font-bold text-foreground text-base">{prayer.name}</p>
+                  <p className="text-xs text-muted-foreground font-amiri italic">{prayer.arabicName}</p>
+                </div>
               </div>
-              <p className="text-lg font-semibold text-foreground tabular-nums">
-                {prayer.time} <span className="text-xs text-muted-foreground font-normal ml-1">(Iqama: {prayer.time})</span>
-              </p>
+              <div className="text-right">
+                <p className="text-2xl font-bold text-foreground tabular-nums">
+                  {prayer.time}
+                </p>
+                <p className="text-xs text-muted-foreground font-medium">Iqama: {prayer.time}</p>
+              </div>
             </div>
           ))}
-          {hijriDate && (
-            <div className="pt-2 border-t border-border/30 mt-3">
-              <p className="text-xs text-muted-foreground">{hijriDate}</p>
-            </div>
-          )}
         </CardContent>
       </Card>
 
-
-
-      {/* Settings - Minimal */}
-      <Card className="card-minimal border-border/50">
-        <CardContent className="p-4 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-          <div className="flex items-center gap-3">
+      {/* Settings - Premium */}
+      <Card className="overflow-hidden">
+        <CardContent className="p-6 flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between">
+          <div className="flex items-center gap-2 flex-wrap">
             <Button 
               variant="ghost" 
               size="sm"
               onClick={() => changeDate(-1)}
-              className="h-9 w-9 p-0"
+              className="h-10 w-10 p-0 rounded-lg hover:bg-accent/50"
             >
-              <ChevronLeft className="h-4 w-4" />
+              <ChevronLeft className="h-5 w-5" />
             </Button>
-            <p className="text-sm font-medium min-w-[160px]">
-              {selectedDate ? selectedDate.toLocaleDateString('en-US', {
-                weekday: 'short',
-                month: 'short',
-                day: 'numeric',
-              }) : 'Loading...'}
-            </p>
+            <div className="px-4 py-2 rounded-lg bg-muted/40 border border-border/40">
+              <p className="text-sm font-bold text-foreground min-w-[160px] text-center">
+                {selectedDate ? selectedDate.toLocaleDateString('en-US', {
+                  weekday: 'short',
+                  month: 'short',
+                  day: 'numeric',
+                }) : 'Loading...'}
+              </p>
+            </div>
             <Button 
               variant="ghost" 
               size="sm"
               onClick={() => changeDate(1)}
-              className="h-9 w-9 p-0"
+              className="h-10 w-10 p-0 rounded-lg hover:bg-accent/50"
             >
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="h-5 w-5" />
             </Button>
             {selectedDate && selectedDate.toDateString() !== new Date().toDateString() && (
               <Button 
-                variant="ghost" 
+                variant="outline"
                 size="sm"
                 onClick={() => setSelectedDate(new Date())}
-                className="text-xs"
+                className="text-xs font-semibold ml-2"
               >
-                Today
+                Go to Today
               </Button>
             )}
           </div>
 
-          <div className="flex items-center gap-2 w-full sm:w-auto">
+          <div className="flex items-center gap-3 w-full sm:w-auto">
+            <label className="text-sm font-semibold text-muted-foreground">Method:</label>
             <Select value={method} onValueChange={setMethod}>
-              <SelectTrigger className="w-full sm:w-[220px] h-9 text-sm">
+              <SelectTrigger className="w-full sm:w-[240px] h-10 text-sm font-medium rounded-lg border-border/60">
                 <SelectValue placeholder="Calculation Method" />
               </SelectTrigger>
               <SelectContent>
                 {calculationMethods.map((m) => (
-                  <SelectItem key={m.value} value={m.value} className="text-sm">
+                  <SelectItem key={m.value} value={m.value} className="text-sm font-medium">
                     {m.label}
                   </SelectItem>
                 ))}
