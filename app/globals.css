@@ -141,6 +141,36 @@
   .animate-in-post {
     animation: slide-down-fade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
+
+  /* Minimal card styling */
+  .card-minimal {
+    @apply bg-white dark:bg-card border border-border rounded-lg p-6 shadow-sm;
+  }
+
+  /* Light green accent backgrounds */
+  .bg-accent-light {
+    @apply bg-primary/5 dark:bg-primary/10;
+  }
+
+  /* Refined badge styling */
+  .badge-green {
+    @apply bg-primary/10 text-primary border border-primary/20;
+  }
+
+  /* Lightweight button text */
+  .btn-minimal {
+    @apply font-medium text-sm tracking-wide;
+  }
+
+  /* Better focus states */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
+  }
+
+  /* Minimal facility tags */
+  .facility-tag {
+    @apply inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/5 text-sm border border-primary/10 text-foreground;
+  }
 }
 
 @keyframes feed-refresh-glow {

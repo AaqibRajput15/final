@@ -114,86 +114,75 @@ export function MosqueDetail({ data }: MosqueDetailProps) {
 
   return (
     <div>
-      <div className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-primary/5 to-background">
-        <div className="absolute inset-0 opacity-5">
-          <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="public-mosque-pattern" x="0" y="0" width="56" height="56" patternUnits="userSpaceOnUse">
-                <path d="M28 0L56 28L28 56L0 28Z" fill="none" stroke="currentColor" strokeWidth="1" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#public-mosque-pattern)" />
-          </svg>
-        </div>
-
-        <div className="relative mx-auto max-w-7xl px-4 py-8 lg:px-8">
+      {/* Hero Section - Minimal Design */}
+      <div className="bg-accent-light border-b border-border/30">
+        <div className="mx-auto max-w-7xl px-4 py-6 lg:px-8">
           <Link
             href="/mosques"
-            className="group mb-8 inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 transition-colors hover:text-primary"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
           >
-            <div className="rounded-lg bg-muted p-1 transition-colors group-hover:bg-primary/10">
-              <ChevronLeft className="h-4 w-4" />
-            </div>
+            <ChevronLeft className="h-4 w-4" />
             Back to Directory
           </Link>
 
-          <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
-              <div className="flex h-24 w-24 items-center justify-center rounded-[2rem] bg-primary text-primary-foreground shadow-2xl shadow-primary/20">
-                <MosqueIcon className="h-12 w-12" />
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            {/* Left Side - Info */}
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-start flex-1">
+              {/* Icon */}
+              <div className="flex h-20 w-20 items-center justify-center rounded-lg bg-primary/10 flex-shrink-0">
+                <MosqueIcon className="h-10 w-10 text-primary" />
               </div>
+
+              {/* Details */}
               <div className="space-y-3">
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                  <h1 className="text-3xl font-black tracking-tight text-foreground sm:text-4xl">
+                <div className="flex flex-wrap items-center gap-3">
+                  <h1 className="text-2xl lg:text-3xl font-semibold text-foreground">
                     {mosque.name}
                   </h1>
-                  {mosque.is_verified ? (
-                    <Badge className="w-fit gap-1.5 rounded-full border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-emerald-600">
+                  {mosque.is_verified && (
+                    <Badge className="badge-green gap-1.5 rounded-full h-fit py-1">
                       <CheckCircle2 className="h-3.5 w-3.5" />
                       Verified
                     </Badge>
-                  ) : null}
+                  )}
                 </div>
 
-                <div className="flex flex-wrap items-center gap-3 text-sm font-medium text-muted-foreground">
+                <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
                   <span className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4 text-primary/70" />
+                    <MapPin className="h-4 w-4" />
                     {mosque.address}, {mosque.city}, {mosque.state}
                   </span>
-                  {mosque.established_year ? (
-                    <span className="rounded-xl border border-border/50 bg-background/60 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-foreground/80">
-                      Est. {mosque.established_year}
-                    </span>
-                  ) : null}
-                  {mosque.capacity ? (
-                    <span className="rounded-xl border border-border/50 bg-background/60 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-foreground/80">
-                      {mosque.capacity.toLocaleString()} Capacity
-                    </span>
-                  ) : null}
+                  {mosque.established_year && (
+                    <span className="text-xs">Est. {mosque.established_year}</span>
+                  )}
+                  {mosque.capacity && (
+                    <span className="text-xs">{mosque.capacity.toLocaleString()} Capacity</span>
+                  )}
                 </div>
 
-                <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+                <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
                   {mosque.description || "This mosque profile is managed live by the operations team and community panel."}
                 </p>
               </div>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row">
+            {/* Action Buttons */}
+            <div className="flex flex-col gap-2 sm:flex-row">
               <Button
                 onClick={openDirections}
-                size="lg"
-                className="h-12 gap-3 rounded-2xl px-6 shadow-xl shadow-primary/20"
+                size="sm"
+                className="gap-2 rounded-lg px-4"
               >
-                <Navigation className="h-5 w-5" />
+                <Navigation className="h-4 w-4" />
                 Get Directions
               </Button>
               <Button
                 onClick={handleShare}
                 variant="outline"
-                size="lg"
-                className="h-12 gap-3 rounded-2xl px-6"
+                size="sm"
+                className="gap-2 rounded-lg px-4"
               >
-                <Share2 className="h-5 w-5" />
+                <Share2 className="h-4 w-4" />
                 Share
               </Button>
             </div>
@@ -753,23 +742,14 @@ function StatCard({
   value: number;
   tone: "primary" | "sky" | "emerald" | "amber";
 }) {
-  const toneClass =
-    tone === "sky"
-      ? "bg-sky-500/10 text-sky-600"
-      : tone === "emerald"
-        ? "bg-emerald-500/10 text-emerald-600"
-        : tone === "amber"
-          ? "bg-amber-500/10 text-amber-600"
-          : "bg-primary/10 text-primary";
-
   return (
-    <Card className="rounded-3xl border-border/50">
+    <Card className="card-minimal border-border/50">
       <CardContent className="flex items-center justify-between p-5">
         <div>
-          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70">{label}</p>
-          <p className="mt-2 text-3xl font-black tracking-tight">{value}</p>
+          <p className="text-xs font-medium text-muted-foreground">{label}</p>
+          <p className="mt-2 text-2xl font-semibold text-foreground">{value}</p>
         </div>
-        <div className={cn("rounded-2xl p-3", toneClass)}>
+        <div className="text-muted-foreground/50">
           <Users className="h-5 w-5" />
         </div>
       </CardContent>

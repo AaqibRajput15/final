@@ -208,214 +208,91 @@ export function PrayerTimesView() {
 
   return (
     <div className="space-y-6">
-      {/* Current Time & Location */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Card className="bg-gradient-to-br from-primary/10 to-transparent">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <Clock className="h-6 w-6 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Current Time</p>
-                <p className="text-2xl font-bold tabular-nums">
-                  {currentTime ? currentTime.toLocaleTimeString('en-US', { 
-                    hour: '2-digit', 
-                    minute: '2-digit',
-                    second: '2-digit'
-                  }) : '--:--:--'}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
-                <MapPin className="h-6 w-6 text-muted-foreground" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm text-muted-foreground">Location</p>
-                <p className="font-semibold truncate">{location?.city || 'Loading...'}</p>
-              </div>
-              <Button variant="ghost" size="icon" onClick={requestLocation}>
-                <LocateFixed className="h-4 w-4" />
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        {nextPrayer && (
-          <Card className="bg-gradient-to-br from-accent/20 to-transparent">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="h-12 w-12 rounded-full bg-accent/20 flex items-center justify-center">
-                  <Sun className="h-6 w-6 text-accent-foreground" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Next Prayer</p>
-                  <p className="font-semibold">{nextPrayer.name} at {nextPrayer.time}</p>
-                  <p className="text-xs text-muted-foreground">in {nextPrayer.remaining}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {hijriDate && (
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
-                  <Calendar className="h-6 w-6 text-muted-foreground" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Hijri Date</p>
-                  <p className="font-semibold">{hijriDate}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-      </div>
-
-      {/* Date Navigation & Settings */}
-      <Card>
-        <CardContent className="p-4">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      {/* Prayer Times - Main Card (Minimal Design) */}
+      <Card className="card-minimal border-border/50">
+        <CardHeader className="pb-4">
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="icon" onClick={() => changeDate(-1)}>
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
-              <div className="min-w-[200px] text-center">
-                <p className="font-semibold">
-                  {selectedDate ? selectedDate.toLocaleDateString('en-US', {
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  }) : 'Loading...'}
-                </p>
-              </div>
-              <Button variant="outline" size="icon" onClick={() => changeDate(1)}>
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-              {selectedDate && selectedDate.toDateString() !== new Date().toDateString() && (
-                <Button variant="ghost" size="sm" onClick={() => setSelectedDate(new Date())}>
-                  Today
-                </Button>
-              )}
-            </div>
-
-            <div className="flex items-center gap-2">
-              <Select value={method} onValueChange={setMethod}>
-                <SelectTrigger className="w-[280px]">
-                  <SelectValue placeholder="Calculation Method" />
-                </SelectTrigger>
-                <SelectContent>
-                  {calculationMethods.map((m) => (
-                    <SelectItem key={m.value} value={m.value}>
-                      {m.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Button 
-                variant="outline" 
-                size="icon" 
-                onClick={() => location && fetchPrayerTimes(location.lat, location.lng, selectedDate)}
-              >
-                <RefreshCw className={cn("h-4 w-4", loading && "animate-spin")} />
-              </Button>
+              <Clock className="h-5 w-5 text-primary" />
+              <CardTitle className="text-lg font-semibold">Today&apos;s Prayer Times</CardTitle>
             </div>
           </div>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          {prayerTimes.filter(p => p.name !== 'Sunrise').map((prayer) => (
+            <div key={prayer.name} className="flex justify-between items-center py-2 border-b border-border/30 last:border-0">
+              <div>
+                <p className="font-medium text-foreground">{prayer.name}</p>
+                <p className="text-xs text-muted-foreground font-amiri">{prayer.arabicName}</p>
+              </div>
+              <p className="text-lg font-semibold text-foreground tabular-nums">
+                {prayer.time} <span className="text-xs text-muted-foreground font-normal ml-1">(Iqama: {prayer.time})</span>
+              </p>
+            </div>
+          ))}
+          {hijriDate && (
+            <div className="pt-2 border-t border-border/30 mt-3">
+              <p className="text-xs text-muted-foreground">{hijriDate}</p>
+            </div>
+          )}
         </CardContent>
       </Card>
 
-      {/* Prayer Times Grid */}
-      {loading ? (
-        <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        </div>
-      ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {prayerTimes.map((prayer) => {
-            const Icon = prayer.icon
-            const isCurrent = prayer.name === currentPrayer
-            const isSunrise = prayer.name === 'Sunrise'
-            
-            return (
-              <Card 
-                key={prayer.name}
-                className={cn(
-                  "transition-all",
-                  isCurrent && !isSunrise && "border-primary ring-2 ring-primary/20",
-                  isSunrise && "opacity-60"
-                )}
-              >
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className={cn(
-                        "h-14 w-14 rounded-xl flex items-center justify-center",
-                        isCurrent && !isSunrise ? "bg-primary text-primary-foreground" : "bg-muted"
-                      )}>
-                        <Icon className="h-7 w-7" />
-                      </div>
-                      <div>
-                        <h3 className={cn(
-                          "text-xl font-semibold",
-                          isCurrent && !isSunrise && "text-primary"
-                        )}>
-                          {prayer.name}
-                        </h3>
-                        <p className="text-muted-foreground font-amiri text-lg">
-                          {prayer.arabicName}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <p className={cn(
-                        "text-2xl font-bold tabular-nums",
-                        isCurrent && !isSunrise && "text-primary"
-                      )}>
-                        {prayer.time}
-                      </p>
-                      {isCurrent && !isSunrise && (
-                        <Badge variant="default" className="mt-1">Current</Badge>
-                      )}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            )
-          })}
-        </div>
-      )}
 
-      {/* Mosque-specific times */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Mosque-Specific Iqama Times</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-muted-foreground mb-4">
-            Select a mosque to view their specific Iqama times:
-          </p>
-          <Select>
-            <SelectTrigger className="max-w-md">
-              <SelectValue placeholder="Select a mosque..." />
-            </SelectTrigger>
-            <SelectContent>
-              {mockMosques.map((mosque) => (
-                <SelectItem key={mosque.id} value={mosque.id}>
-                  {mosque.name} - {mosque.city}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+
+      {/* Settings - Minimal */}
+      <Card className="card-minimal border-border/50">
+        <CardContent className="p-4 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Button 
+              variant="ghost" 
+              size="sm"
+              onClick={() => changeDate(-1)}
+              className="h-9 w-9 p-0"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <p className="text-sm font-medium min-w-[160px]">
+              {selectedDate ? selectedDate.toLocaleDateString('en-US', {
+                weekday: 'short',
+                month: 'short',
+                day: 'numeric',
+              }) : 'Loading...'}
+            </p>
+            <Button 
+              variant="ghost" 
+              size="sm"
+              onClick={() => changeDate(1)}
+              className="h-9 w-9 p-0"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+            {selectedDate && selectedDate.toDateString() !== new Date().toDateString() && (
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={() => setSelectedDate(new Date())}
+                className="text-xs"
+              >
+                Today
+              </Button>
+            )}
+          </div>
+
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <Select value={method} onValueChange={setMethod}>
+              <SelectTrigger className="w-full sm:w-[220px] h-9 text-sm">
+                <SelectValue placeholder="Calculation Method" />
+              </SelectTrigger>
+              <SelectContent>
+                {calculationMethods.map((m) => (
+                  <SelectItem key={m.value} value={m.value} className="text-sm">
+                    {m.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </CardContent>
       </Card>
     </div>

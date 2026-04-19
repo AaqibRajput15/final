@@ -43,20 +43,9 @@ export function ImamDetailView({ imam, mosque }: ImamDetailViewProps) {
 
   return (
     <div>
-      {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-primary/10 via-primary/5 to-background">
-        <div className="absolute inset-0 opacity-5">
-          <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="imam-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-                <circle cx="20" cy="20" r="1" fill="currentColor" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#imam-pattern)" />
-          </svg>
-        </div>
-
-        <div className="relative mx-auto max-w-7xl px-4 py-8 lg:px-8">
+      {/* Hero Section - Minimal */}
+      <div className="bg-accent-light border-b border-border/30">
+        <div className="mx-auto max-w-7xl px-4 py-6 lg:px-8">
           <Link 
             href={`/mosques/${mosque.id}`}
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
@@ -65,12 +54,12 @@ export function ImamDetailView({ imam, mosque }: ImamDetailViewProps) {
             Back to {mosque.name}
           </Link>
 
-          <div className="flex flex-col lg:flex-row gap-8 items-start">
+          <div className="flex flex-col lg:flex-row gap-6 items-start">
             {/* Profile Image */}
             <div className="flex-shrink-0">
-              <Avatar className="h-48 w-48 rounded-2xl border-4 border-background shadow-xl">
+              <Avatar className="h-40 w-40 rounded-lg border-2 border-background shadow-sm">
                 <AvatarImage src={imam.photoUrl} alt={imam.name} className="object-cover" />
-                <AvatarFallback className="rounded-2xl text-4xl bg-primary/10 text-primary">
+                <AvatarFallback className="rounded-lg text-3xl bg-primary/10 text-primary">
                   {imam.name.split(' ').map(n => n[0]).join('')}
                 </AvatarFallback>
               </Avatar>
@@ -78,16 +67,19 @@ export function ImamDetailView({ imam, mosque }: ImamDetailViewProps) {
 
             {/* Basic Info */}
             <div className="flex-1">
-              <div className="flex flex-wrap items-center gap-3 mb-2">
-                <Badge className="bg-primary/10 text-primary">{imam.title}</Badge>
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <Badge className="badge-green text-xs">{imam.title}</Badge>
                 {imam.isActive && (
-                  <Badge variant="outline" className="border-green-500 text-green-600">Active</Badge>
+                  <Badge variant="outline" className="border-primary/30 text-primary bg-primary/5 text-xs gap-1">
+                    <span className="h-2 w-2 bg-primary rounded-full"></span>
+                    Active
+                  </Badge>
                 )}
               </div>
               
-              <h1 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">{imam.name}</h1>
+              <h1 className="text-2xl lg:text-3xl font-semibold text-foreground mb-3">{imam.name}</h1>
               
-              <div className="flex flex-wrap gap-4 text-muted-foreground mb-6">
+              <div className="space-y-2 text-sm text-muted-foreground mb-5">
                 <div className="flex items-center gap-2">
                   <Building2 className="h-4 w-4" />
                   <span>{mosque.name}</span>
@@ -102,46 +94,20 @@ export function ImamDetailView({ imam, mosque }: ImamDetailViewProps) {
                 </div>
               </div>
 
-              {/* Quick Stats */}
-              <div className="flex flex-wrap gap-3">
-                {imam.education.length > 0 && (
-                  <Badge variant="secondary" className="gap-1.5 py-1.5">
-                    <GraduationCap className="h-3.5 w-3.5" />
-                    {imam.education.length} Degree{imam.education.length > 1 ? 's' : ''}
-                  </Badge>
-                )}
-                <Badge variant="secondary" className="gap-1.5 py-1.5">
-                  <Languages className="h-3.5 w-3.5" />
-                  {imam.languages.length} Language{imam.languages.length > 1 ? 's' : ''}
-                </Badge>
-                {imam.certifications && imam.certifications.length > 0 && (
-                  <Badge variant="secondary" className="gap-1.5 py-1.5">
-                    <Award className="h-3.5 w-3.5" />
-                    {imam.certifications.length} Certification{imam.certifications.length > 1 ? 's' : ''}
-                  </Badge>
-                )}
-                {imam.publications && imam.publications.length > 0 && (
-                  <Badge variant="secondary" className="gap-1.5 py-1.5">
-                    <FileText className="h-3.5 w-3.5" />
-                    {imam.publications.length} Publication{imam.publications.length > 1 ? 's' : ''}
-                  </Badge>
-                )}
-              </div>
-
               {/* Action Buttons */}
-              <div className="flex flex-wrap gap-3 mt-6">
+              <div className="flex flex-wrap gap-2">
                 {imam.contactEmail && (
-                  <Button asChild>
+                  <Button asChild size="sm" className="gap-2 rounded-lg">
                     <a href={`mailto:${imam.contactEmail}`}>
-                      <Mail className="h-4 w-4 mr-2" />
+                      <Mail className="h-4 w-4" />
                       Contact Imam
                     </a>
                   </Button>
                 )}
                 {imam.contactPhone && (
-                  <Button variant="outline" asChild>
+                  <Button variant="outline" size="sm" asChild className="gap-2 rounded-lg">
                     <a href={`tel:${imam.contactPhone}`}>
-                      <Phone className="h-4 w-4 mr-2" />
+                      <Phone className="h-4 w-4" />
                       Call
                     </a>
                   </Button>
