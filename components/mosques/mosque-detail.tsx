@@ -782,12 +782,12 @@ function PrayerTimeCard({
   className?: string;
 }) {
   return (
-    <div className={cn("rounded-2xl border border-border/50 bg-muted/20 p-4", className)}>
+    <div className={cn("rounded-xl border border-border/40 bg-gradient-to-br from-muted/30 to-muted/10 p-5 shadow-elevation-sm hover:shadow-elevation-md transition-all hover:border-border/60 group cursor-default", className)}>
       <div className="flex items-center justify-between gap-4">
-        <p className="font-bold text-foreground">{label}</p>
+        <p className="font-semibold text-foreground text-sm uppercase tracking-wider text-muted-foreground">{label}</p>
         <div className="text-right">
-          <p className="font-black tracking-tight text-primary">{adhan || "TBD"}</p>
-          {iqama ? <p className="text-xs text-muted-foreground">Iqama: {iqama}</p> : null}
+          <p className="font-black tracking-tight text-lg text-primary group-hover:text-primary/90 transition-colors">{adhan || "TBD"}</p>
+          {iqama ? <p className="text-xs text-muted-foreground font-medium mt-1">Iqama: {iqama}</p> : null}
         </div>
       </div>
     </div>

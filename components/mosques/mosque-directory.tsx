@@ -650,48 +650,48 @@ function MosqueCard({ mosque }: { mosque: Mosque }) {
 function MosqueListItem({ mosque }: { mosque: Mosque }) {
   return (
     <Link href={`/mosques/${mosque.id}`}>
-      <Card className="group overflow-hidden border-border/50 transition-all hover:border-primary/30 hover:shadow-md">
-        <CardContent className="flex items-center gap-4 p-4">
-          {/* Icon */}
-          <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-lg bg-accent-light">
-            <MosqueIcon className="h-8 w-8 text-primary/40" />
+      <Card className="group overflow-hidden hover-lift">
+        <CardContent className="flex items-center gap-4 p-6">
+          {/* Premium Icon */}
+          <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary/8 to-accent/4 border border-primary/20 group-hover:from-primary/12 group-hover:to-accent/6 transition-all">
+            <MosqueIcon className="h-10 w-10 text-primary/50 group-hover:text-primary/70 transition-colors" />
           </div>
 
           {/* Content */}
           <div className="min-w-0 flex-1">
             {/* Name and Verified Badge */}
-            <div className="flex items-center gap-2">
-              <h3 className="font-semibold text-foreground">
+            <div className="flex items-center gap-2 flex-wrap">
+              <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors">
                 {mosque.name}
               </h3>
               {mosque.is_verified && (
-                <Badge className="badge-green h-fit text-xs">
-                  <CheckCircle className="h-3 w-3" />
+                <Badge variant="success" className="h-fit text-xs font-semibold">
+                  <CheckCircle className="h-3.5 w-3.5" />
                 </Badge>
               )}
             </div>
 
             {/* Quick Info */}
-            <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-              <span className="flex items-center gap-1">
-                <MapPin className="h-3.5 w-3.5" />
+            <div className="mt-2 flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+              <span className="flex items-center gap-1.5 font-medium">
+                <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
                 {mosque.city}, {mosque.state}
               </span>
-              <span className="flex items-center gap-1">
-                <Users className="h-3.5 w-3.5" />
-                {mosque.capacity ?? 0} capacity
+              <span className="flex items-center gap-1.5 font-medium">
+                <Users className="h-4 w-4 text-primary flex-shrink-0" />
+                {(mosque.capacity ?? 0).toLocaleString()} capacity
               </span>
             </div>
 
             {/* Facilities */}
-            <div className="mt-2 flex flex-wrap gap-1">
+            <div className="mt-3 flex flex-wrap gap-1.5">
               {(mosque.facilities ?? []).slice(0, 4).map((facility) => (
-                <Badge key={facility} variant="outline" className="facility-tag text-xs">
+                <Badge key={facility} variant="outline" className="facility-tag-premium text-xs">
                   {facility}
                 </Badge>
               ))}
               {(mosque.facilities ?? []).length > 4 && (
-                <Badge variant="outline" className="facility-tag text-xs">
+                <Badge variant="outline" className="facility-tag-premium text-xs font-semibold">
                   +{(mosque.facilities ?? []).length - 4}
                 </Badge>
               )}
